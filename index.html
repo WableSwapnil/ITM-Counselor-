@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ITM Counsellor Daily Tracker</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="panel form-panel" aria-labelledby="page-title">
+        <div class="brand-row">
+          <div>
+            <p class="eyebrow">ITM University Admissions</p>
+            <h1 id="page-title">Counsellor Daily Tracker</h1>
+          </div>
+          <span class="status-pill" id="connectionStatus">Sheet ready</span>
+        </div>
+
+        <form id="dailyTrackerForm">
+          <section class="form-section">
+            <h2>Shift Details</h2>
+            <div class="grid four">
+              <label>
+                Date
+                <input type="date" name="entryDate" required />
+              </label>
+              <label>
+                Counsellor
+                <input type="text" name="counsellorName" placeholder="Counsellor name" required />
+              </label>
+              <label>
+                Team
+                <input type="text" name="teamName" placeholder="Team name" />
+              </label>
+              <label>
+                Manager
+                <input type="text" name="managerName" placeholder="Manager name" />
+              </label>
+            </div>
+          </section>
+
+          <section class="form-section">
+            <div class="section-heading">
+              <h2>Daily Execution Buckets</h2>
+              <button type="button" class="secondary compact" id="clearBuckets">Clear bucket counts</button>
+            </div>
+            <div class="bucket-table" id="bucketTable"></div>
+          </section>
+
+          <section class="form-section">
+            <h2>Daily KPI Achieved</h2>
+            <div class="grid five">
+              <label>
+                Total Calls
+                <input type="number" name="totalCalls" min="0" inputmode="numeric" placeholder="150+" />
+              </label>
+              <label>
+                Connected Calls
+                <input type="number" name="connectedCalls" min="0" inputmode="numeric" placeholder="60+" />
+              </label>
+              <label>
+                Applications
+                <input type="number" name="applications" min="0" inputmode="numeric" placeholder="2+" />
+              </label>
+              <label>
+                SRFs
+                <input type="number" name="srfs" min="0" inputmode="numeric" placeholder="1+" />
+              </label>
+              <label>
+                Talktime Minutes
+                <input type="number" name="talktimeMinutes" min="0" inputmode="numeric" placeholder="180+" />
+              </label>
+            </div>
+          </section>
+
+          <section class="form-section">
+            <h2>Mandatory CRM Actions</h2>
+            <div class="check-grid">
+              <label><input type="checkbox" name="otpVerified" value="Yes" /> Mobile OTP verified</label>
+              <label><input type="checkbox" name="whatsappSent" value="Yes" /> WhatsApp link and brochure sent</label>
+              <label><input type="checkbox" name="crmNoteAdded" value="Yes" /> CRM note added</label>
+              <label><input type="checkbox" name="leadStageMoved" value="Yes" /> Lead sub-stage moved</label>
+              <label><input type="checkbox" name="followUpSet" value="Yes" /> Follow-up date and time set</label>
+            </div>
+          </section>
+
+          <label>
+            Manager Comments / Blockers
+            <textarea name="comments" rows="4" placeholder="Blockers, action required, notes for review"></textarea>
+          </label>
+
+          <div class="actions">
+            <button type="reset" class="secondary">Clear Form</button>
+            <button type="submit" id="submitButton">Save Daily Data</button>
+          </div>
+        </form>
+      </section>
+
+      <aside class="panel summary-panel">
+        <h2>Session Summary</h2>
+        <div class="stats">
+          <div>
+            <strong id="submissionCount">0</strong>
+            <span>Saved days</span>
+          </div>
+          <div>
+            <strong id="sessionApps">0</strong>
+            <span>Applications</span>
+          </div>
+          <div>
+            <strong id="sessionSrfs">0</strong>
+            <span>SRFs</span>
+          </div>
+          <div>
+            <strong id="sessionCalls">0</strong>
+            <span>Total calls</span>
+          </div>
+        </div>
+        <div class="recent-list" id="recentList">
+          <p class="empty">Saved daily records will appear here during this session.</p>
+        </div>
+      </aside>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="script.js"></script>
+  </body>
+</html>
