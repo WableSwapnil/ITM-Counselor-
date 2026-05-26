@@ -1,5 +1,28 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import {
+  GoogleAuthProvider,
+  getAuth,
+  getRedirectResult,
+  onAuthStateChanged,
+  signInWithPopup,
+  signInWithRedirect,
+  signOut,
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
 const GOOGLE_SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbwISHyAXQZVix0RgQbCgTJU00AKBsi8DXqIqWevop52kcKkrN5EqxO2qEwSNWeeezG5fQ/exec";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAdO6wshzd4sSjQSl_kGKtelSdseqLRDm8",
+  authDomain: "itm-counselor.firebaseapp.com",
+  projectId: "itm-counselor",
+  storageBucket: "itm-counselor.firebasestorage.app",
+  messagingSenderId: "11295448645",
+  appId: "1:11295448645:web:5beb10578498e8117bcd2c",
+  measurementId: "G-WJELKGVRZ0",
+};
+
+const ALLOWED_EMAIL_DOMAIN = "@itm.edu";
 
 const buckets = [
   {
@@ -72,6 +95,9 @@ const sendButton = document.querySelector("#sendButton");
 const quickRepliesEl = document.querySelector("#quickReplies");
 const restartButton = document.querySelector("#restartButton");
 const backButton = document.querySelector("#backButton");
+const authGate = document.querySelector("#authGate");
+const googleSignInButton = document.querySelector("#googleSignInButton");
+const authError = document.querySelector("#authError");
 
 function currentDateISO() {
   // Always use India date (Asia/Kolkata), not the user's local machine TZ or UTC.
@@ -91,6 +117,8 @@ function currentDateISO() {
 
 // Intentionally no visible "sheet ready" status pill in the UI.
 wireBrandFallback();
+lockUIForAuth();
+initAuth();
 
 // --- Conversation state ---
 const state = {
@@ -124,6 +152,7 @@ const history = [];
 
 let promptIndex = 0;
 let awaitingCustomUI = null; // {type: "bucket_select"} etc.
+let conversationStarted = false;
 
 const prompts = [
   {
@@ -255,7 +284,7 @@ chatInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") handleSend();
 });
 
-restartConversation();
+// Start conversation only after successful auth.
 
 function wireBrandFallback() {
   const img = document.querySelector(".brand-logo");
@@ -270,6 +299,99 @@ function wireBrandFallback() {
   // If the asset path is wrong/missing, show readable text.
   img.addEventListener("error", showFallback);
   if (img.complete && img.naturalWidth === 0) showFallback();
+}
+
+function lockUIForAuth() {
+  // Disable interaction until auth is successful.
+  chatInput.disabled = true;
+  sendButton.disabled = true;
+  restartButton.disabled = true;
+  backButton.disabled = true;
+  quickRepliesEl.innerHTML = "";
+  chatLog.innerHTML = "";
+}
+
+function unlockUIAfterAuth() {
+  authGate.classList.add("hidden");
+  chatInput.disabled = false;
+  sendButton.disabled = false;
+  restartButton.disabled = false;
+  backButton.disabled = history.length === 0;
+  chatInput.focus();
+
+  if (!conversationStarted) {
+    conversationStarted = true;
+    restartConversation();
+  }
+}
+
+function showAuthError(message) {
+  authError.textContent = message || "";
+}
+
+function initAuth() {
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  // Try to finish a redirect sign-in if we were redirected back.
+  getRedirectResult(auth).catch(() => {
+    // Ignore; auth state listener below will handle steady state.
+  });
+
+  googleSignInButton.addEventListener("click", async () => {
+    showAuthError("");
+    googleSignInButton.disabled = true;
+    googleSignInButton.textContent = "Signing in...";
+
+    try {
+      await signInWithPopup(auth, provider);
+    } catch (err) {
+      const code = err?.code || "";
+      // Mobile Safari and some in-app browsers are more reliable with redirect.
+      if (
+        code === "auth/popup-blocked" ||
+        code === "auth/popup-closed-by-user" ||
+        code === "auth/operation-not-supported-in-this-environment"
+      ) {
+        try {
+          await signInWithRedirect(auth, provider);
+          return;
+        } catch (redirectErr) {
+          showAuthError("Could not start Google sign-in. Please try again.");
+        }
+      } else {
+        showAuthError("Could not sign in. Please try again.");
+      }
+    } finally {
+      googleSignInButton.disabled = false;
+      googleSignInButton.textContent = "Continue with Google";
+    }
+  });
+
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      authGate.classList.remove("hidden");
+      lockUIForAuth();
+      return;
+    }
+
+    const email = String(user.email || "").toLowerCase();
+    if (!email.endsWith(ALLOWED_EMAIL_DOMAIN)) {
+      showAuthError(`Access denied. Please sign in with an ${ALLOWED_EMAIL_DOMAIN} email ID.`);
+      try {
+        await signOut(auth);
+      } catch {
+        // ignore
+      }
+      authGate.classList.remove("hidden");
+      lockUIForAuth();
+      return;
+    }
+
+    showAuthError("");
+    unlockUIAfterAuth();
+  });
 }
 
 function restartConversation() {

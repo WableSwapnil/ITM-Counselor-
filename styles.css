@@ -124,6 +124,82 @@ h2 {
   min-height: 0;
 }
 
+.auth-gate {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(17, 24, 39, 0.12);
+  backdrop-filter: blur(3px);
+  z-index: 5;
+}
+
+.auth-gate.hidden {
+  display: none;
+}
+
+.chat-panel {
+  position: relative;
+}
+
+.auth-card {
+  width: min(420px, 100%);
+  border-radius: 10px;
+  border: 1px solid rgba(29, 36, 51, 0.12);
+  background: #ffffff;
+  box-shadow: 0 22px 60px rgba(17, 24, 39, 0.18);
+  padding: 18px;
+  display: grid;
+  gap: 12px;
+}
+
+.auth-card h2 {
+  font-size: 1.1rem;
+}
+
+.auth-subtitle {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.google-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 46px;
+  border-radius: 8px;
+  border: 1px solid rgba(29, 36, 51, 0.14);
+  background: #ffffff;
+  color: #111827;
+  font-weight: 900;
+}
+
+.google-button:hover {
+  background: #f6f8fb;
+}
+
+.google-icon {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  background: #ffffff;
+}
+
+.auth-error {
+  margin: 0;
+  min-height: 18px;
+  color: var(--danger);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
 .chat-log {
   border: 1px solid var(--line);
   border-radius: 8px;
