@@ -125,22 +125,78 @@ h2 {
 }
 
 .auth-gate {
-  position: absolute;
+  position: fixed;
   inset: 0;
+  z-index: 50;
+  background: #ffffff;
   display: grid;
-  place-items: center;
-  padding: 18px;
-  background: rgba(17, 24, 39, 0.12);
-  backdrop-filter: blur(3px);
-  z-index: 5;
+  place-items: stretch;
 }
 
 .auth-gate.hidden {
   display: none;
 }
 
-.chat-panel {
-  position: relative;
+/* Auth layout (split screen) */
+.auth-layout {
+  display: grid;
+  grid-template-columns: minmax(360px, 1fr) minmax(0, 1.1fr);
+  min-height: 100vh;
+}
+
+.auth-left {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 34px;
+  color: #ffffff;
+  background: radial-gradient(1200px 700px at 12% 12%, rgba(255, 255, 255, 0.12), transparent 55%),
+    linear-gradient(160deg, #a91d54 0%, #7a123a 100%);
+}
+
+.auth-left-top {
+  display: flex;
+  align-items: center;
+}
+
+.auth-left-logo {
+  height: 40px;
+  width: auto;
+  opacity: 0.92;
+  filter: brightness(1.15) contrast(1.05);
+}
+
+.auth-left-main {
+  display: grid;
+  align-content: center;
+  gap: 14px;
+  max-width: 520px;
+}
+
+.auth-left-title {
+  margin: 0;
+  font-size: 2.3rem;
+  line-height: 1.05;
+  letter-spacing: 0;
+}
+
+.auth-left-subtitle {
+  margin: 0;
+  font-size: 1.06rem;
+  line-height: 1.55;
+  opacity: 0.92;
+  font-weight: 600;
+}
+
+.auth-left-footer {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.auth-right {
+  display: grid;
+  place-items: center;
+  padding: 34px 18px;
+  background: #ffffff;
 }
 
 .auth-card {
@@ -148,14 +204,14 @@ h2 {
   border-radius: 10px;
   border: 1px solid rgba(29, 36, 51, 0.12);
   background: #ffffff;
-  box-shadow: 0 22px 60px rgba(17, 24, 39, 0.18);
-  padding: 18px;
+  box-shadow: 0 22px 60px rgba(17, 24, 39, 0.12);
+  padding: 22px;
   display: grid;
   gap: 12px;
 }
 
 .auth-card h2 {
-  font-size: 1.1rem;
+  font-size: 1.35rem;
 }
 
 .auth-subtitle {
@@ -198,6 +254,14 @@ h2 {
   color: var(--danger);
   font-size: 0.9rem;
   font-weight: 700;
+}
+
+.auth-footnote {
+  margin-top: 4px;
+  text-align: center;
+  color: #98a2b3;
+  font-size: 0.85rem;
+  font-weight: 600;
 }
 
 .chat-log {
@@ -448,6 +512,18 @@ button.compact {
 @media (max-width: 900px) {
   .app-shell {
     grid-template-columns: 1fr;
+  }
+
+  .auth-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-left {
+    padding: 26px;
+  }
+
+  .auth-left-title {
+    font-size: 1.85rem;
   }
 }
 
