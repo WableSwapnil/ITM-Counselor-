@@ -69,21 +69,15 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
-  width: fit-content;
   max-width: 100%;
-  padding: 8px 10px;
   margin: 0 0 10px;
-  border: 1px solid rgba(29, 36, 51, 0.1);
-  border-radius: 10px;
-  background: #ffffff;
-  box-shadow: 0 10px 30px rgba(29, 36, 51, 0.08);
 }
 
 .brand-logo {
   display: block;
-  height: 40px;
+  height: 44px;
   width: auto;
-  max-width: min(520px, 100%);
+  max-width: 100%;
   object-fit: contain;
   filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.06));
 }
