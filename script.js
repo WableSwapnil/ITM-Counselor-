@@ -146,6 +146,9 @@ const state = {
   comments: "",
 };
 
+// Filled after successful Google sign-in.
+let signedInUser = null; // { name, email }
+
 // Keep snapshots so Back goes to the previous question reliably (including dynamic prompts).
 // Each entry: { promptIndex, stateSnapshot }
 const history = [];
@@ -155,16 +158,6 @@ let awaitingCustomUI = null; // {type: "bucket_select"} etc.
 let conversationStarted = false;
 
 const prompts = [
-  {
-    key: "counsellorName",
-    ask: () => "Counsellor name?",
-    placeholder: "e.g. Swapnil",
-    parse: (raw) => {
-      const v = (raw || "").trim();
-      if (!v) return { error: "Please enter counsellor name." };
-      return v;
-    },
-  },
   {
     key: "teamName",
     ask: () => "Team name?",
@@ -397,9 +390,29 @@ function initAuth() {
       return;
     }
 
+    signedInUser = {
+      name: inferDisplayName(user),
+      email: String(user.email || ""),
+    };
+    state.counsellorName = signedInUser.name;
+
     showAuthError("");
     unlockUIAfterAuth();
   });
+}
+
+function inferDisplayName(user) {
+  const rawName = String(user?.displayName || "").trim();
+  if (rawName) return rawName;
+  const email = String(user?.email || "").trim();
+  if (!email) return "Counsellor";
+  const local = email.split("@")[0] || "Counsellor";
+  // turn john.doe into John Doe
+  return local
+    .split(/[._-]+/g)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
 }
 
 function setGoogleButtonLabel(label) {
@@ -427,7 +440,7 @@ function restartConversation() {
 
   // reset state
   state.entryDate = currentDateISO();
-  state.counsellorName = "";
+  state.counsellorName = signedInUser?.name || state.counsellorName || "";
   state.teamName = "";
   state.managerName = "";
   state.totalCalls = 0;
@@ -444,8 +457,9 @@ function restartConversation() {
   state.bucketCounts = new Map();
   state.comments = "";
 
+  const name = state.counsellorName ? ` ${state.counsellorName}` : "";
   pushBot(
-    "Hi. I’ll capture your daily tracker in a few quick questions, then save it to Google Sheets.\n\nYou can use quick replies, type answers, or press Back/Restart anytime."
+    `Hi${name}. I’ll capture your daily tracker in a few quick questions, then save it to Google Sheets.\n\nYou can use quick replies, type answers, or press Back/Restart anytime.`
   );
   askCurrentPrompt();
 }
