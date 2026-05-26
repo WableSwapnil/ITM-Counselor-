@@ -281,48 +281,51 @@ h2 {
 /* removed auth footnote per UX request */
 
 /* Thank you page */
-.thankyou-shell {
-  width: min(900px, calc(100% - 32px));
-  margin: 0 auto;
-  padding: 48px 0;
+.thankyou-body {
+  background: #ffffff;
+}
+
+.thankyou-header {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  right: 18px;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.thankyou-logo {
+  height: 46px;
+  width: auto;
+  max-width: min(360px, 100%);
+  object-fit: contain;
+  filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.06));
+}
+
+.thankyou-center {
   min-height: 100svh;
   display: grid;
   place-items: center;
+  text-align: center;
+  padding: 20px;
 }
 
-.thankyou-panel {
-  padding: 26px;
-  width: min(560px, 100%);
+.thankyou-icon {
+  margin-bottom: 14px;
+}
+
+.thankyou-title {
+  margin: 0;
+  font-size: clamp(2.1rem, 4vw, 3rem);
+  line-height: 1.05;
 }
 
 .thankyou-subtitle {
-  margin: 10px 0 0;
+  margin: 12px 0 0;
   color: var(--muted);
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 650;
-}
-
-.thankyou-actions {
-  margin-top: 20px;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.link-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 46px;
-  padding: 0 18px;
-  border-radius: 6px;
-  background: var(--accent);
-  color: #ffffff;
-  font-weight: 900;
-  text-decoration: none;
-}
-
-.link-button:hover {
-  background: var(--accent-dark);
 }
 
 .chat-log {
@@ -624,8 +627,8 @@ button.compact {
     grid-template-columns: 1fr;
   }
 
-  .thankyou-shell {
-    padding: 16px 0;
+  .thankyou-logo {
+    height: 40px;
   }
 }
 

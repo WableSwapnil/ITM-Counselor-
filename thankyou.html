@@ -6,22 +6,28 @@
     <title>Thank You</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
-    <main class="thankyou-shell">
-      <section class="panel thankyou-panel" aria-labelledby="thanks-title">
-        <div class="brand-mark" aria-label="ITM Skills University">
-          <img class="brand-logo" src="assets/itm-skills-logo.png" alt="ITM Skills University logo" />
-          <span class="brand-fallback">ITM Skills University</span>
-        </div>
+  <body class="thankyou-body">
+    <header class="thankyou-header" aria-label="ITM Skills University">
+      <img class="thankyou-logo" src="assets/itm-skills-logo.png" alt="ITM Skills University logo" />
+    </header>
 
-        <h1 id="thanks-title">Thank you</h1>
-        <p class="thankyou-subtitle">Your daily tracker response has been saved.</p>
+    <main class="thankyou-center" aria-labelledby="thanks-title">
+      <div class="thankyou-icon" aria-hidden="true">
+        <svg viewBox="0 0 64 64" width="64" height="64">
+          <circle cx="32" cy="32" r="28" fill="var(--accent)" />
+          <path
+            d="M20.8 33.3l7.2 7.2 15.2-15.8"
+            fill="none"
+            stroke="#ffffff"
+            stroke-width="6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
 
-        <div class="thankyou-actions">
-          <a class="link-button" href="index.html">Sign in again</a>
-        </div>
-      </section>
+      <h1 id="thanks-title" class="thankyou-title">Thank you!</h1>
+      <p class="thankyou-subtitle">We have captured your response.</p>
     </main>
   </body>
 </html>
-
