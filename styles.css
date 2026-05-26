@@ -111,7 +111,7 @@ h2 {
   padding: 8px 12px;
   border-radius: 999px;
   color: var(--accent-dark);
-  background: #dcf6ef;
+  background: #fde7f0;
   font-size: 0.82rem;
   font-weight: 700;
 }
@@ -166,8 +166,8 @@ h2 {
 }
 
 .msg.user .bubble {
-  background: #0f766e;
-  border-color: rgba(15, 118, 110, 0.22);
+  background: var(--accent);
+  border-color: rgba(169, 29, 84, 0.28);
   color: #ffffff;
 }
 
@@ -257,7 +257,7 @@ select:focus,
 textarea:focus {
   border-color: var(--accent);
   background: #ffffff;
-  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
+  box-shadow: 0 0 0 3px rgba(169, 29, 84, 0.18);
 }
 
 button {
