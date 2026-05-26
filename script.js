@@ -115,10 +115,6 @@ function currentDateISO() {
   return `${y}-${m}-${d}`;
 }
 
-// Intentionally no visible "sheet ready" status pill in the UI.
-wireBrandFallback();
-lockUIForAuth();
-initAuth();
 
 // --- Conversation state ---
 const state = {
@@ -279,6 +275,10 @@ chatInput.addEventListener("keydown", (e) => {
 });
 
 // Start conversation only after successful auth.
+// Intentionally no visible "sheet ready" status pill in the UI.
+wireBrandFallback();
+lockUIForAuth();
+initAuth();
 
 function wireBrandFallback() {
   const img = document.querySelector(".brand-logo");
