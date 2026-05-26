@@ -141,7 +141,7 @@ h2 {
 .auth-layout {
   display: grid;
   grid-template-columns: minmax(360px, 1fr) minmax(0, 1.1fr);
-  min-height: 100vh;
+  min-height: 100svh;
 }
 
 .auth-left {
@@ -161,8 +161,19 @@ h2 {
 .auth-left-logo {
   height: 40px;
   width: auto;
+  max-width: 100%;
   opacity: 0.92;
   filter: brightness(1.15) contrast(1.05);
+}
+
+@media (min-width: 1024px) {
+  .brand-logo {
+    height: 54px;
+  }
+
+  .auth-left-logo {
+    height: 56px;
+  }
 }
 
 .auth-left-main {
