@@ -148,6 +148,7 @@ const state = {
 
 // Filled after successful Google sign-in.
 let signedInUser = null; // { name, email }
+let authInstance = null;
 
 // Keep snapshots so Back goes to the previous question reliably (including dynamic prompts).
 // Each entry: { promptIndex, stateSnapshot }
@@ -333,6 +334,7 @@ function initAuth() {
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+  authInstance = auth;
   const provider = new GoogleAuthProvider();
 
   // Try to finish a redirect sign-in if we were redirected back.
@@ -721,12 +723,15 @@ async function submitPayload() {
     });
 
     showToast("Daily data saved to Google Sheets.");
-    pushBot("Done. Saved to Google Sheets.\n\nType Restart to log another day.");
-    renderQuickReplies(["Restart"]);
-    chatInput.disabled = false;
-    sendButton.disabled = false;
-    chatInput.placeholder = "Type Restart to begin again";
-    chatInput.focus();
+    pushBot("Done. Saved.\nSigning out...");
+
+    try {
+      if (authInstance) await signOut(authInstance);
+    } catch {
+      // ignore signout errors; still redirect
+    }
+
+    window.location.href = "thankyou.html";
   } catch (error) {
     showToast("Could not save. Check the Apps Script deployment URL and access.", true);
     pushBot("Could not save. Please check the Apps Script deployment URL and access.");

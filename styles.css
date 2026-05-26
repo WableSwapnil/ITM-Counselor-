@@ -280,6 +280,51 @@ h2 {
 
 /* removed auth footnote per UX request */
 
+/* Thank you page */
+.thankyou-shell {
+  width: min(900px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 48px 0;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+}
+
+.thankyou-panel {
+  padding: 26px;
+  width: min(560px, 100%);
+}
+
+.thankyou-subtitle {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.thankyou-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.link-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0 18px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #ffffff;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.link-button:hover {
+  background: var(--accent-dark);
+}
+
 .chat-log {
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -577,6 +622,10 @@ button.compact {
 
   .composer-row {
     grid-template-columns: 1fr;
+  }
+
+  .thankyou-shell {
+    padding: 16px 0;
   }
 }
 
