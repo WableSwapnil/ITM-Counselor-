@@ -707,6 +707,14 @@ async function submitPayload() {
 
   const payload = buildPayload();
 
+  if (authInstance && authInstance.currentUser) {
+    try {
+      payload.token = await authInstance.currentUser.getIdToken();
+    } catch (e) {
+      console.warn("Could not fetch ID token", e);
+    }
+  }
+
   chatInput.disabled = true;
   sendButton.disabled = true;
   quickRepliesEl.innerHTML = "";
