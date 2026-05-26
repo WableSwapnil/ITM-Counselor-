@@ -336,6 +336,9 @@ function initAuth() {
   const auth = getAuth(app);
   authInstance = auth;
   const provider = new GoogleAuthProvider();
+  provider.setCustomParameters({
+    hd: "itm.edu"
+  });
 
   // Try to finish a redirect sign-in if we were redirected back.
   getRedirectResult(auth).catch(() => {
