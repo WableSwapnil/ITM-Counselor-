@@ -90,6 +90,7 @@ function currentDateISO() {
 }
 
 // Intentionally no visible "sheet ready" status pill in the UI.
+wireBrandFallback();
 
 // --- Conversation state ---
 const state = {
@@ -255,6 +256,21 @@ chatInput.addEventListener("keydown", (e) => {
 });
 
 restartConversation();
+
+function wireBrandFallback() {
+  const img = document.querySelector(".brand-logo");
+  const fallback = document.querySelector(".brand-fallback");
+  if (!img || !fallback) return;
+
+  const showFallback = () => {
+    img.style.display = "none";
+    fallback.style.display = "inline";
+  };
+
+  // If the asset path is wrong/missing, show readable text.
+  img.addEventListener("error", showFallback);
+  if (img.complete && img.naturalWidth === 0) showFallback();
+}
 
 function restartConversation() {
   chatLog.innerHTML = "";

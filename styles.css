@@ -65,6 +65,38 @@ body {
   letter-spacing: 0;
 }
 
+.brand-mark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  max-width: 100%;
+  padding: 8px 10px;
+  margin: 0 0 10px;
+  border: 1px solid rgba(29, 36, 51, 0.1);
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(29, 36, 51, 0.08);
+}
+
+.brand-logo {
+  display: block;
+  height: 40px;
+  width: auto;
+  max-width: min(520px, 100%);
+  object-fit: contain;
+  filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.06));
+}
+
+.brand-fallback {
+  display: none;
+  color: #111827;
+  font-size: 0.95rem;
+  font-weight: 900;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
 h1,
 h2 {
   margin: 0;
@@ -359,6 +391,14 @@ button.compact {
     padding: 16px;
     /* Use small viewport units for mobile browser chrome changes when supported */
     min-height: calc(100svh - 20px);
+  }
+
+  .brand-logo {
+    height: 36px;
+  }
+
+  .brand-fallback {
+    font-size: 0.9rem;
   }
 
   .brand-row,
