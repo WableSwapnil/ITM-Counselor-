@@ -229,14 +229,25 @@ h2 {
   width: 100%;
   min-height: 46px;
   border-radius: 8px;
-  border: 1px solid rgba(29, 36, 51, 0.14);
+  border: 2px solid rgba(169, 29, 84, 0.35);
   background: #ffffff;
   color: #111827;
   font-weight: 900;
+  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease, transform 120ms ease;
 }
 
 .google-button:hover {
-  background: #f6f8fb;
+  background: #fff7fb;
+  border-color: rgba(169, 29, 84, 0.55);
+}
+
+.google-button:active {
+  transform: translateY(1px);
+}
+
+.google-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(169, 29, 84, 0.16);
 }
 
 .google-icon {
@@ -256,13 +267,7 @@ h2 {
   font-weight: 700;
 }
 
-.auth-footnote {
-  margin-top: 4px;
-  text-align: center;
-  color: #98a2b3;
-  font-size: 0.85rem;
-  font-weight: 600;
-}
+/* removed auth footnote per UX request */
 
 .chat-log {
   border: 1px solid var(--line);
