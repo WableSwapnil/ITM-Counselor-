@@ -330,6 +330,14 @@ function showAuthError(message) {
 }
 
 function initAuth() {
+  // Firebase Auth requires an authorized web origin (http/https). file:// won't work.
+  if (window.location.protocol === "file:") {
+    authGate.classList.remove("hidden");
+    showAuthError("Google sign-in won't work from a file. Open this app from a hosted URL (Vercel) or localhost.");
+    googleSignInButton.disabled = true;
+    return;
+  }
+
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const provider = new GoogleAuthProvider();
@@ -342,7 +350,7 @@ function initAuth() {
   googleSignInButton.addEventListener("click", async () => {
     showAuthError("");
     googleSignInButton.disabled = true;
-    googleSignInButton.textContent = "Signing in...";
+    setGoogleButtonLabel("Signing in...");
 
     try {
       await signInWithPopup(auth, provider);
@@ -365,7 +373,7 @@ function initAuth() {
       }
     } finally {
       googleSignInButton.disabled = false;
-      googleSignInButton.textContent = "Continue with Google";
+      setGoogleButtonLabel("Continue with Google");
     }
   });
 
@@ -392,6 +400,19 @@ function initAuth() {
     showAuthError("");
     unlockUIAfterAuth();
   });
+}
+
+function setGoogleButtonLabel(label) {
+  // Keep the icon; only update the text node.
+  const existingText = googleSignInButton.querySelector(".google-button-label");
+  if (existingText) {
+    existingText.textContent = label;
+    return;
+  }
+  const span = document.createElement("span");
+  span.className = "google-button-label";
+  span.textContent = label;
+  googleSignInButton.appendChild(span);
 }
 
 function restartConversation() {
