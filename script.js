@@ -472,7 +472,7 @@ function restartConversation() {
 
   const name = state.counsellorName ? ` ${state.counsellorName}` : "";
   pushBot(
-    `Hi${name}. I’ll capture your daily tracker in a few quick questions, then save it to Google Sheets.\n\nYou can use quick replies, type answers, or press Back/Restart anytime.`
+    `Hi${name}. I’ll capture your daily checklist in a few quick questions, then save it to Google Sheets.\n\nYou can use quick replies, type answers, or press Back/Restart anytime.`
   );
   askCurrentPrompt();
 }
