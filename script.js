@@ -372,6 +372,17 @@ function initAuth() {
     }
   });
 
+  const signOutButton = document.getElementById("signOutButton");
+  if (signOutButton) {
+    signOutButton.addEventListener("click", async () => {
+      try {
+        await signOut(auth);
+      } catch (err) {
+        console.error("Error signing out", err);
+      }
+    });
+  }
+
   onAuthStateChanged(auth, async (user) => {
     if (!user) {
       authGate.classList.remove("hidden");
